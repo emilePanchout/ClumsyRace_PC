@@ -51,6 +51,15 @@ public class Manager : MonoBehaviour
 
     void SetUtpConnectionData()
     {
+        if(ipField.text == "")
+        {
+            ipField.text = "127.0.0.1";
+        }
+        if (portField.text == "" || portField.text == "0")
+        {
+            portField.text = "9990";
+        }
+
         var sanitizedIPText = SanitizeAlphaNumeric(ipField.text);
         var sanitizedPortText = SanitizeAlphaNumeric(portField.text);
 
