@@ -83,7 +83,7 @@ public class Manager : MonoBehaviour
 
         if (result)
         {
-            NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            LoadGameScene("Lobby");
 
             return;
         }
@@ -94,5 +94,10 @@ public class Manager : MonoBehaviour
         SetUtpConnectionData();
 
         NetworkManager.Singleton.StartClient();
+    }
+
+    public void LoadGameScene(string name)
+    {
+        NetworkManager.Singleton.SceneManager.LoadScene(name, UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 }

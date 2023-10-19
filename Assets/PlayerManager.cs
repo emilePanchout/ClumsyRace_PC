@@ -22,28 +22,24 @@ public class PlayerManager : NetworkBehaviour
         UpdatePlayerList();
     }
 
-    public  void Update()
-    {
-        //UpdatePlayerList();
-    }
-
     public void UpdatePlayerList()
     {
         if (IsServer)
         {
             playerCount.Value = connectionHandler.numberOfPlayers;
             maxPlayerCount.Value = connectionHandler.MaxNumberOfPlayers;
-
-
-            playerList = new List<NetworkObject>();
-
-            for (int i = 0; i < NetworkManager.Singleton.ConnectedClients.Count; i++)
-            {
-                playerList.Add(NetworkManager.Singleton.ConnectedClients[(ulong)i].PlayerObject);
-
-            }
-            Debug.Log("Player list updated to " + playerCount.Value);
         }
 
+    }
+
+    public void AddPlayer(NetworkObject player)
+    {
+        playerList.Add(player);
+        Debug.Log("Player added");
+    }
+
+    public void RemovePlayer(NetworkObject player)
+    {
+        playerList.Remove(player);
     }
 }
