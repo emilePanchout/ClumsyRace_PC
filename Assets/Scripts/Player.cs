@@ -11,6 +11,7 @@ public class Player : NetworkBehaviour
     private LobbyManager lobbyManager;
 
     public TMP_Text playerName;
+    public GameObject playerCamera;
 
 
     public override void OnNetworkSpawn()
@@ -25,40 +26,39 @@ public class Player : NetworkBehaviour
 
     private void Start()
     {
-        if(SceneManager.GetActiveScene().name == "Lobby")
+        GetComponent<Rigidbody>().isKinematic = true;
+
+        if (SceneManager.GetActiveScene().name == "Lobby")
         {
             lobbyManager = GameObject.Find("LobbyManager").GetComponent<LobbyManager>();
             lobbyManager.UpdatePlayers(0,0);
         }
     }
 
-
     private void OnDestroy()
     {
         playerManager.RemovePlayer(NetworkObject);
     }
 
-    void Update()
-    {
+    // Race functions
 
+    public void ToggleCamera(bool camToggle)
+    {
+        playerCamera.SetActive(camToggle); 
     }
 
-
-    public void PlaceInLobby()
+    public void ToggleKinematic(bool kineToggle)
     {
-        Debug.Log("Placing players in lobby");
-        foreach (PlayerSpawner spawner in lobbyManager.spawnPoints)
+        GetComponent<Rigidbody>().isKinematic = kineToggle;
+    }
+
+    public void ToggleOwnName(bool nameToggle)
+    {
+        if(IsOwner)
         {
-            Debug.Log("Checking spawner ...");
-            int i = 0;
-            if(lobbyManager.spawnPoints[i].player == null)
-            {
-                lobbyManager.spawnPoints[i].SetPlayer(NetworkObject);
-                Debug.Log("Player " + i + " placed");
-                break;
-            }
-            i++;
+            playerName.enabled = nameToggle;
         }
+
     }
 
 }

@@ -23,7 +23,7 @@ public class StarGameButton : NetworkBehaviour
     public void LaunchGame()
 
     {
-        NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        NetworkManager.Singleton.SceneManager.LoadScene("Race", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
 }
