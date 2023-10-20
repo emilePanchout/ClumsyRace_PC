@@ -3,15 +3,16 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Netcode;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : NetworkBehaviour
 {
-    private Vector2 m_V2Look;
-    private Vector2 m_V2Move;
-    private Vector2 m_V2Jump;
+    private Vector2 _look;
+    private Vector2 _move;
+    [SerializeField] private bool _isJump;
 
-    private Vector3 m_V3MoveDirection = Vector3.zero;
-    private float m_fRotationX = 0;
+    private Vector3 MoveDirection = Vector3.zero;
+    private float RotationX = 0;
 
 
     private CharacterController m_characterController;
@@ -19,19 +20,18 @@ public class PlayerMovement : MonoBehaviour
 
 
     [Header("Current state")]
-    [SerializeField] private bool m_isJump;
-    [SerializeField] private bool m_isRunning;
+
 
 
     [Header("Movements")]
-    public float walkSpeed;
-    public float jumpStrength;
-    public float gravityStrength;
+    public float walkSpeed = 4;
+    public float jumpStrength = 4;
+    public float gravityStrength = 8;
 
     [Header("Camera")]
-    public float rotationSpeed;
-    public float xAngleUpperLimit;
-    public float xAngleLowerLimit;
+    public float rotationSpeed = 15;
+    public float xAngleUpperLimit = 15;
+    public float xAngleLowerLimit = 15;
 
 
 
@@ -46,53 +46,68 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if(IsOwner)
+        {
+
+            MoveServerRpc(_look, _move, _isJump);
+        }
+
+    }
+
+    [ServerRpc]
+    private void MoveServerRpc(Vector2 look, Vector2 move, bool isJump)
+    {
+        Debug.Log("RPC");
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
 
-        float curSpeedX = walkSpeed * m_V2Move.y;
-        float curSpeedY = walkSpeed * m_V2Move.x;
-        float movementDirectionY = m_V3MoveDirection.y;
+        float curSpeedX = walkSpeed * move.y;
+        float curSpeedY = walkSpeed * move.x;
+        float movementDirectionY = MoveDirection.y;
 
-        m_V3MoveDirection = (forward * curSpeedX) + (right * curSpeedY);
+        MoveDirection = (forward * curSpeedX) + (right * curSpeedY);
 
-        if (m_isJump && m_characterController.isGrounded)
+        if (isJump && m_characterController.isGrounded)
         {
-            m_V3MoveDirection.y = jumpStrength;
+            MoveDirection.y = jumpStrength;
         }
         else
         {
-            m_V3MoveDirection.y = movementDirectionY;
+            MoveDirection.y = movementDirectionY;
         }
 
         if (!m_characterController.isGrounded)
         {
-            m_V3MoveDirection.y -= gravityStrength * Time.deltaTime;
+            MoveDirection.y -= gravityStrength * Time.deltaTime;
         }
 
-        m_characterController.Move(m_V3MoveDirection * Time.deltaTime);
-        m_fRotationX += -m_V2Look.y * rotationSpeed * Time.deltaTime;
-        m_fRotationX = Mathf.Clamp(m_fRotationX, xAngleLowerLimit, xAngleUpperLimit);
-        m_playerCamera.transform.localRotation = Quaternion.Euler(m_fRotationX, 0, 0);
-        transform.rotation *= Quaternion.Euler(0, m_V2Look.x * rotationSpeed * Time.deltaTime, 0);
+        m_characterController.Move(MoveDirection * Time.deltaTime);
+
+        RotationX += -look.y * rotationSpeed * Time.deltaTime;
+        RotationX = Mathf.Clamp(RotationX, xAngleLowerLimit, xAngleUpperLimit);
+
+        m_playerCamera.transform.localRotation = Quaternion.Euler(RotationX, 0, 0);
+        transform.rotation *= Quaternion.Euler(0, look.x * rotationSpeed * Time.deltaTime, 0);
     }
+
+
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void OnLook(InputAction.CallbackContext context)
     {
-        m_V2Look = context.ReadValue<Vector2>();
+        _look = context.ReadValue<Vector2>();
     }
 
 
     public void OnMove(InputAction.CallbackContext context)
     {
-        m_V2Move = context.ReadValue<Vector2>();
-        Debug.Log(context.ReadValue<Vector2>());
+        _move = context.ReadValue<Vector2>();
     }
 
     public void OnJump(InputAction.CallbackContext context)
     {
-        m_isJump = Convert.ToBoolean(context.ReadValue<float>());
+        _isJump = Convert.ToBoolean(context.ReadValue<float>());
     }
 }
