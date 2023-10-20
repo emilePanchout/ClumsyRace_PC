@@ -83,7 +83,7 @@ public class Player : NetworkBehaviour
     public void TeleportToCheckpoint()
     {
         characterController.enabled = false;
-        transform.position = new Vector3(0, 0, 0);//lastCheckpoint.transform.position;
+        transform.position = lastCheckpoint.transform.position;
         transform.rotation = lastCheckpoint.transform.rotation;
         characterController.enabled = true; ;
     }
