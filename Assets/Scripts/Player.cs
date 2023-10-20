@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class Player : NetworkBehaviour
@@ -12,6 +13,8 @@ public class Player : NetworkBehaviour
 
     public TMP_Text playerName;
     public GameObject playerCamera;
+    public PlayerInput playerInput;
+
 
 
     public override void OnNetworkSpawn()
@@ -44,7 +47,11 @@ public class Player : NetworkBehaviour
 
     public void ToggleCamera(bool camToggle)
     {
-        playerCamera.SetActive(camToggle); 
+        if(IsOwner)
+        {
+            playerCamera.SetActive(camToggle);
+        }
+
     }
 
     public void ToggleKinematic(bool kineToggle)
@@ -57,6 +64,14 @@ public class Player : NetworkBehaviour
         if(IsOwner)
         {
             playerName.enabled = nameToggle;
+        }
+    }
+
+    public void ToggleInputs(bool inputToggle)
+    {
+        if(IsOwner)
+        {
+            playerInput.enabled = inputToggle;
         }
 
     }

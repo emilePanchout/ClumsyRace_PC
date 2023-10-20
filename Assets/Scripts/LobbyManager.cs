@@ -33,31 +33,35 @@ public class LobbyManager : NetworkBehaviour
 
     public void PlacePlayer()
     {
-        ResetSpawner();
-
-        int i = 0;
-        foreach (NetworkObject player in playerManager.playerList)
+        if( SceneManager.GetActiveScene().name == "Lobby")
         {
-            
-            Debug.Log("/////////////////////////////////////////////////////");
-            Debug.Log("placing player " + (i+1) + " out of " + playerManager.playerList.Count);
+            ResetSpawner();
 
-            int j = 0;
-            foreach (PlayerSpawner spawner in spawnPoints)
+            int i = 0;
+            foreach (NetworkObject player in playerManager.playerList)
             {
-                
-                Debug.Log("Checking spawner " + (j+1) + " out of " + spawnPoints.Count);
- 
-                if (spawnPoints[j].player == null)
+
+                Debug.Log("/////////////////////////////////////////////////////");
+                Debug.Log("placing player " + (i + 1) + " out of " + playerManager.playerList.Count);
+
+                int j = 0;
+                foreach (PlayerSpawner spawner in spawnPoints)
                 {
-                    spawnPoints[j].SetPlayer(player);
-                    Debug.Log("Player " + (i+1) + " placed on spawner " + (j+1));
-                    break;
+
+                    Debug.Log("Checking spawner " + (j + 1) + " out of " + spawnPoints.Count);
+
+                    if (spawnPoints[j].player == null)
+                    {
+                        spawnPoints[j].SetPlayer(player);
+                        Debug.Log("Player " + (i + 1) + " placed on spawner " + (j + 1));
+                        break;
+                    }
+                    j++;
                 }
-                j++;
+                i++;
             }
-            i++;
         }
+        
     }
 
     public void ResetSpawner()

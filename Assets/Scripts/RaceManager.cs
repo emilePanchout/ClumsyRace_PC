@@ -5,10 +5,11 @@ using Unity.Netcode;
 
 public class RaceManager : NetworkBehaviour
 {
-    public PlayerManager playerManager;
+    private PlayerManager playerManager;
 
     private void Start()
     {
+        NetworkManager.Singleton.GetComponent<ConnectionApprovalHandler>().enabled = false;
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         PreparePlayer();
     }
@@ -17,9 +18,12 @@ public class RaceManager : NetworkBehaviour
     {
         foreach(NetworkObject player in playerManager.playerList)
         {
-            player.GetComponent<Player>().ToggleCamera(true);
-            player.GetComponent<Player>().ToggleKinematic(false);
+
             player.GetComponent<Player>().ToggleOwnName(false);
+            player.GetComponent<Player>().ToggleCamera(true);
+            player.GetComponent<Player>().ToggleInputs(true);
+            player.GetComponent<Player>().ToggleKinematic(false);
+
         }
     }
 

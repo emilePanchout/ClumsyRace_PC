@@ -40,6 +40,12 @@ public class ConnectionApprovalHandler : MonoBehaviour
             response.Reason = "Too many players in lobby!";
         }
 
+        if (SceneManager.GetActiveScene().name == "Race")
+        {
+            isApproved = false;
+            response.Reason = "Race already started";
+        }
+
         response.Approved = isApproved;
         response.CreatePlayerObject = isApproved;
         response.Position = new Vector3(0, 3, 0);
