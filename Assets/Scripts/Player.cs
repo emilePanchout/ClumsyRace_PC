@@ -14,6 +14,9 @@ public class Player : NetworkBehaviour
     public TMP_Text playerName;
     public GameObject playerCamera;
     public PlayerInput playerInput;
+    public CharacterController characterController;
+
+    public GameObject lastCheckpoint;
 
 
 
@@ -30,6 +33,7 @@ public class Player : NetworkBehaviour
     private void Start()
     {
         GetComponent<Rigidbody>().isKinematic = true;
+        characterController = GetComponent<CharacterController>();
 
         if (SceneManager.GetActiveScene().name == "Lobby")
         {
@@ -76,6 +80,13 @@ public class Player : NetworkBehaviour
 
     }
 
+    public void TeleportToCheckpoint()
+    {
+        characterController.enabled = false;
+        transform.position = new Vector3(0, 0, 0);//lastCheckpoint.transform.position;
+        transform.rotation = lastCheckpoint.transform.rotation;
+        characterController.enabled = true; ;
+    }
 }
 
    

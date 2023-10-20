@@ -41,14 +41,14 @@ public class LobbyManager : NetworkBehaviour
             foreach (NetworkObject player in playerManager.playerList)
             {
 
-                Debug.Log("/////////////////////////////////////////////////////");
-                Debug.Log("placing player " + (i + 1) + " out of " + playerManager.playerList.Count);
+                //Debug.Log("/////////////////////////////////////////////////////");
+                //Debug.Log("placing player " + (i + 1) + " out of " + playerManager.playerList.Count);
 
                 int j = 0;
                 foreach (PlayerSpawner spawner in spawnPoints)
                 {
 
-                    Debug.Log("Checking spawner " + (j + 1) + " out of " + spawnPoints.Count);
+                    //Debug.Log("Checking spawner " + (j + 1) + " out of " + spawnPoints.Count);
 
                     if (spawnPoints[j].player == null)
                     {

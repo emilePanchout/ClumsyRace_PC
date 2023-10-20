@@ -7,6 +7,9 @@ public class RaceManager : NetworkBehaviour
 {
     private PlayerManager playerManager;
 
+    public RaceSpawn raceSpawner;
+
+
     private void Start()
     {
         
@@ -16,6 +19,7 @@ public class RaceManager : NetworkBehaviour
 
     public void PreparePlayer()
     {
+        int i = 0;
         foreach(NetworkObject player in playerManager.playerList)
         {
 
@@ -24,8 +28,16 @@ public class RaceManager : NetworkBehaviour
             player.GetComponent<Player>().ToggleInputs(true);
             player.GetComponent<Player>().ToggleKinematic(false);
 
+            player.GetComponent<Player>().lastCheckpoint = raceSpawner.spawnerList[i];
+            player.GetComponent<Player>().TeleportToCheckpoint();
+
+            i++;
         }
     }
+
+
+
+
 
 
 }

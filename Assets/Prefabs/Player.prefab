@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 2561908503261199945}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -415,6 +415,7 @@ MonoBehaviour:
   playerName: {fileID: 6594471180378617892}
   playerCamera: {fileID: 796322834711373657}
   playerInput: {fileID: 7504164708886679050}
+  lastCheckpoint: {fileID: 0}
 --- !u!54 &3411149421287709296
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -485,7 +486,7 @@ MonoBehaviour:
   walkSpeed: 4
   jumpStrength: 4
   gravityStrength: 8
-  rotationSpeed: 15
+  rotationSpeed: 20
   xAngleUpperLimit: 15
   xAngleLowerLimit: 15
 --- !u!114 &7504164708886679050
