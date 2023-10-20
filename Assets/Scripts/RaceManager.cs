@@ -9,7 +9,7 @@ public class RaceManager : NetworkBehaviour
 
     private void Start()
     {
-        NetworkManager.Singleton.GetComponent<ConnectionApprovalHandler>().enabled = false;
+        
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         PreparePlayer();
     }

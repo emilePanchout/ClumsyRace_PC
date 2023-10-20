@@ -46,10 +46,40 @@ public class PlayerMovement : NetworkBehaviour
 
     void Update()
     {
-        if(IsOwner)
+        if (IsOwner)
         {
+            //MoveServerRpc(_look, _move, _isJump);
 
-            MoveServerRpc(_look, _move, _isJump);
+            Vector3 forward = transform.TransformDirection(Vector3.forward);
+            Vector3 right = transform.TransformDirection(Vector3.right);
+
+            float curSpeedX = walkSpeed * _move.y;
+            float curSpeedY = walkSpeed * _move.x;
+            float movementDirectionY = MoveDirection.y;
+
+            MoveDirection = (forward * curSpeedX) + (right * curSpeedY);
+
+            if (_isJump && m_characterController.isGrounded)
+            {
+                MoveDirection.y = jumpStrength;
+            }
+            else
+            {
+                MoveDirection.y = movementDirectionY;
+            }
+
+            if (!m_characterController.isGrounded)
+            {
+                MoveDirection.y -= gravityStrength * Time.deltaTime;
+            }
+
+            m_characterController.Move(MoveDirection * Time.deltaTime);
+
+            RotationX += -_look.y * rotationSpeed * Time.deltaTime;
+            RotationX = Mathf.Clamp(RotationX, xAngleLowerLimit, xAngleUpperLimit);
+
+            m_playerCamera.transform.localRotation = Quaternion.Euler(RotationX, 0, 0);
+            transform.rotation *= Quaternion.Euler(0, _look.x * rotationSpeed * Time.deltaTime, 0);
         }
 
     }
@@ -58,36 +88,7 @@ public class PlayerMovement : NetworkBehaviour
     private void MoveServerRpc(Vector2 look, Vector2 move, bool isJump)
     {
         Debug.Log("RPC");
-        Vector3 forward = transform.TransformDirection(Vector3.forward);
-        Vector3 right = transform.TransformDirection(Vector3.right);
-
-        float curSpeedX = walkSpeed * move.y;
-        float curSpeedY = walkSpeed * move.x;
-        float movementDirectionY = MoveDirection.y;
-
-        MoveDirection = (forward * curSpeedX) + (right * curSpeedY);
-
-        if (isJump && m_characterController.isGrounded)
-        {
-            MoveDirection.y = jumpStrength;
-        }
-        else
-        {
-            MoveDirection.y = movementDirectionY;
-        }
-
-        if (!m_characterController.isGrounded)
-        {
-            MoveDirection.y -= gravityStrength * Time.deltaTime;
-        }
-
-        m_characterController.Move(MoveDirection * Time.deltaTime);
-
-        RotationX += -look.y * rotationSpeed * Time.deltaTime;
-        RotationX = Mathf.Clamp(RotationX, xAngleLowerLimit, xAngleUpperLimit);
-
-        m_playerCamera.transform.localRotation = Quaternion.Euler(RotationX, 0, 0);
-        transform.rotation *= Quaternion.Euler(0, look.x * rotationSpeed * Time.deltaTime, 0);
+        
     }
 
 
