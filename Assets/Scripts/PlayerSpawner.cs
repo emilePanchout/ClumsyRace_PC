@@ -16,6 +16,7 @@ public class PlayerSpawner : NetworkBehaviour
 
     }
 
+
     public void SetPlayer(NetworkObject newPlayer)
     {
         player = newPlayer;

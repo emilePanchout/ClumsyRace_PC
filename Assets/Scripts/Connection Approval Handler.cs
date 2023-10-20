@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class ConnectionApprovalHandler : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class ConnectionApprovalHandler : MonoBehaviour
 
     public int MaxNumberOfPlayers = 6;
     public int numberOfPlayers = 0;
+
+    public TMP_Text errorText;
 
     void Start()
     {
@@ -40,6 +43,12 @@ public class ConnectionApprovalHandler : MonoBehaviour
             response.Reason = "Too many players in lobby!";
         }
 
+        if (SceneManager.GetActiveScene().name == "Race")
+        {
+            isApproved = false;
+            response.Reason = "Race already started";
+        }
+
         response.Approved = isApproved;
         response.CreatePlayerObject = isApproved;
         response.Position = new Vector3(0, 3, 0);
@@ -52,6 +61,7 @@ public class ConnectionApprovalHandler : MonoBehaviour
     {
         if (!m_NetworkManager.IsServer && m_NetworkManager.DisconnectReason != string.Empty && !m_NetworkManager.IsApproved)
         {
+            errorText.text = m_NetworkManager.DisconnectReason;
             Debug.Log($"Approval Declined Reason: {m_NetworkManager.DisconnectReason}");
         }
 
