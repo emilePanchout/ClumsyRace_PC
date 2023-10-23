@@ -16,7 +16,7 @@ public class Player : NetworkBehaviour
     public PlayerInput playerInput;
     public CharacterController characterController;
 
-    public GameObject lastCheckpoint;
+    public Transform lastCheckpoint;
 
 
 
@@ -40,6 +40,7 @@ public class Player : NetworkBehaviour
             lobbyManager.UpdatePlayers(0,0);
         }
     }
+
 
     private void OnDestroy()
     {
@@ -88,12 +89,25 @@ public class Player : NetworkBehaviour
 
     }
 
+    public void SetCheckpoint(Transform spawnPoint)
+    {
+        if(IsOwner)
+        {
+            lastCheckpoint = spawnPoint;
+        }
+
+    }
+
     public void TeleportToCheckpoint()
     {
-        characterController.enabled = false;
-        transform.position = lastCheckpoint.transform.position;
-        transform.rotation = lastCheckpoint.transform.rotation;
-        characterController.enabled = true; ;
+        if(IsOwner)
+        {
+            characterController.enabled = false;
+            transform.position = lastCheckpoint.transform.position;
+            transform.rotation = lastCheckpoint.transform.rotation;
+            characterController.enabled = true; ;
+        }
+
     }
 }
 

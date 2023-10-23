@@ -42,7 +42,7 @@ public class RaceManager : NetworkBehaviour
             player.GetComponent<Player>().ToggleKinematic(false);
             player.GetComponent<Player>().ToggleCharacterController(true);
 
-            player.GetComponent<Player>().lastCheckpoint = raceSpawner.spawnerList[i];
+            player.GetComponent<Player>().SetCheckpoint(raceSpawner.spawnerList[i].transform);
             player.GetComponent<Player>().TeleportToCheckpoint();
 
             i++;

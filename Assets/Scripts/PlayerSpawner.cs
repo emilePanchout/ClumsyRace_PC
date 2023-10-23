@@ -21,6 +21,7 @@ public class PlayerSpawner : NetworkBehaviour
     {
         player = newPlayer;
         player.transform.position = transform.position + Vector3.up * 0.5f;
+        player.transform.rotation = Quaternion.identity;
     }
 
     public void RemovePlayer()
