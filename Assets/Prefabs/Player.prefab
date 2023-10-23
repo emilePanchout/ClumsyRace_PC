@@ -415,6 +415,7 @@ MonoBehaviour:
   playerName: {fileID: 6594471180378617892}
   playerCamera: {fileID: 796322834711373657}
   playerInput: {fileID: 7504164708886679050}
+  characterController: {fileID: 5287771600174252704}
   lastCheckpoint: {fileID: 0}
 --- !u!54 &3411149421287709296
 Rigidbody:

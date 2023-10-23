@@ -17,7 +17,8 @@ public class LobbyManager : NetworkBehaviour
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         playerManager.playerCount.OnValueChanged += UpdatePlayers;
 
-        UpdatePlayers(0, playerManager.playerCount.Value);
+        ReseTScene();
+
     }
 
     public void UpdatePlayers(int prev ,int curr)
@@ -41,7 +42,6 @@ public class LobbyManager : NetworkBehaviour
             foreach (NetworkObject player in playerManager.playerList)
             {
 
-                //Debug.Log("/////////////////////////////////////////////////////");
                 //Debug.Log("placing player " + (i + 1) + " out of " + playerManager.playerList.Count);
 
                 int j = 0;
@@ -64,12 +64,43 @@ public class LobbyManager : NetworkBehaviour
         
     }
 
+
     public void ResetSpawner()
     {
         foreach (PlayerSpawner spawner in spawnPoints)
         {
             spawner.player = null;
         }
+    }
+
+    public void ResetPlayer()
+    {
+        foreach (NetworkObject player in playerManager.playerList)
+        {
+            player.gameObject.SetActive(true);
+            player.GetComponent<Player>().ToggleOwnName(true);
+            player.GetComponent<Player>().ToggleCamera(false);
+            player.GetComponent<Player>().ToggleInputs(false);
+            player.GetComponent<Player>().ToggleKinematic(true);
+            player.GetComponent<Player>().ToggleCharacterController(false);
+            player.GetComponent<Player>().lastCheckpoint = null;
+
+        }
+    }
+
+    public void DelockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void ReseTScene()
+    {
+        ResetSpawner();
+        ResetPlayer();
+        UpdatePlayers(0, playerManager.playerCount.Value);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
 

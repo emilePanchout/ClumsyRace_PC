@@ -12,11 +12,20 @@ public class RaceManager : NetworkBehaviour
     public GameObject countdown;
     public TMP_Text countdownText;
 
+    public bool oneHasFinished = false;
+    public GameObject finishCountdown;
+    public TMP_Text finishCountdownText;
+    public GameObject finishImage;
+    public int timeTofFinish = 30;
+
+    public List<GameObject> playerFinished;
+
 
     private void Start()
     {
         
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
+        LockCursor();
         PreparePlayer();
         StartCountdown();
     }
@@ -31,6 +40,7 @@ public class RaceManager : NetworkBehaviour
             player.GetComponent<Player>().ToggleCamera(true);
             //player.GetComponent<Player>().ToggleInputs(true);
             player.GetComponent<Player>().ToggleKinematic(false);
+            player.GetComponent<Player>().ToggleCharacterController(true);
 
             player.GetComponent<Player>().lastCheckpoint = raceSpawner.spawnerList[i];
             player.GetComponent<Player>().TeleportToCheckpoint();
@@ -39,6 +49,63 @@ public class RaceManager : NetworkBehaviour
         }
     }
 
+    ////////////////////////////////////////////////////////////////////
+
+    public void StartFinishCountdown()
+    {
+        if(IsServer && !oneHasFinished)
+        {
+            StartFinishCountdownClientRpc();
+            oneHasFinished = true;
+        }
+    }
+
+    [ClientRpc]
+    public void StartFinishCountdownClientRpc()
+    {
+        finishCountdown.SetActive(true);
+        StartCoroutine(FinishCountdown(timeTofFinish));
+    }
+
+
+    IEnumerator FinishCountdown(int seconds)
+    {
+        int counter = seconds;
+        while (counter > -1)
+        {
+            finishCountdownText.text = "0:" + counter.ToString() + " to finish";
+
+            yield return new WaitForSeconds(1);
+
+            counter--;
+        }
+
+        FinishGame();
+    }
+
+
+    public void FinishGame()
+    {
+        finishImage.SetActive(true);
+        finishCountdown.SetActive(false);
+        StartCoroutine(WaitEnd());
+       
+    }
+
+    IEnumerator WaitEnd()
+    {
+        yield return new WaitForSeconds(4);
+
+        if (IsServer)
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene("Lobby", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        }
+
+    }
+
+
+
+    ////////////////////////////////////////////////////////////////////
 
     public void StartCountdown()
     {
@@ -48,11 +115,12 @@ public class RaceManager : NetworkBehaviour
         }
     }
 
+
     [ClientRpc]
     public void StartCountdownClientRpc()
     {
+        countdown.SetActive(true);
         StartCoroutine(Countdown(10));
-        Debug.Log("clientRPC");
     }
 
     public void EndCountdown()
@@ -88,7 +156,15 @@ public class RaceManager : NetworkBehaviour
 
         EndCountdown();
         
+    }
 
+
+    ////////////////////////////////////////////////////////////////////
+
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
 

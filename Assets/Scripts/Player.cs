@@ -33,7 +33,6 @@ public class Player : NetworkBehaviour
     private void Start()
     {
         GetComponent<Rigidbody>().isKinematic = true;
-        characterController = GetComponent<CharacterController>();
 
         if (SceneManager.GetActiveScene().name == "Lobby")
         {
@@ -58,6 +57,15 @@ public class Player : NetworkBehaviour
 
     }
 
+    public void ToggleCharacterController(bool charToggle)
+    {
+        if (IsOwner)
+        {
+            characterController.enabled = charToggle;
+        }
+
+    }
+
     public void ToggleKinematic(bool kineToggle)
     {
         GetComponent<Rigidbody>().isKinematic = kineToggle;
@@ -67,7 +75,7 @@ public class Player : NetworkBehaviour
     {
         if(IsOwner)
         {
-            playerName.enabled = nameToggle;
+            playerName.transform.gameObject.SetActive(nameToggle);
         }
     }
 
