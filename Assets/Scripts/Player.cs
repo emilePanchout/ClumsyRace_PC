@@ -14,6 +14,7 @@ public class Player : NetworkBehaviour
     public TMP_Text playerName;
     public GameObject playerCamera;
     public PlayerInput playerInput;
+    public MeshRenderer modelMesh;
     public CharacterController characterController;
 
     public Transform lastCheckpoint;
@@ -28,7 +29,6 @@ public class Player : NetworkBehaviour
         playerName.text = "J" + playerManager.playerList.Count.ToString();
 
     }
-
 
     private void Start()
     {
@@ -49,6 +49,7 @@ public class Player : NetworkBehaviour
 
     // Race functions
 
+    
     public void ToggleCamera(bool camToggle)
     {
         if(IsOwner)

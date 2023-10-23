@@ -52,6 +52,11 @@ public class LobbyManager : NetworkBehaviour
 
                     if (spawnPoints[j].player == null)
                     {
+                        if(IsOwner)
+                        {
+                            Debug.Log(spawnPoints[j] + " d");
+                        }
+
                         spawnPoints[j].SetPlayer(player);
                         Debug.Log("Player " + (i + 1) + " placed on spawner " + (j + 1));
                         break;
@@ -96,7 +101,7 @@ public class LobbyManager : NetworkBehaviour
 
     public void ReseTScene()
     {
-        ResetSpawner();
+        //ResetSpawner();
         ResetPlayer();
         UpdatePlayers(0, playerManager.playerCount.Value);
         Cursor.lockState = CursorLockMode.None;

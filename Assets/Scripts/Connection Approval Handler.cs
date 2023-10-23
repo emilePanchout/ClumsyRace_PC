@@ -65,6 +65,7 @@ public class ConnectionApprovalHandler : MonoBehaviour
             Debug.Log($"Approval Declined Reason: {m_NetworkManager.DisconnectReason}");
         }
 
+
         numberOfPlayers--;
         playerManager.UpdatePlayerList();
 

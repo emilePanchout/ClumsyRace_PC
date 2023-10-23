@@ -34,6 +34,7 @@ public class Manager : MonoBehaviour
     {
         mainPanel.SetActive(true);
         connectionPanel.SetActive(false);
+        NetworkManager.Singleton.Shutdown();
     }
 
     public void StartGame()
@@ -44,6 +45,7 @@ public class Manager : MonoBehaviour
         }
         else
         {
+            
             StartClient();
         }
     }
@@ -78,7 +80,7 @@ public class Manager : MonoBehaviour
     private void StartHost()
     {
         SetUtpConnectionData();
-
+        
         var result = NetworkManager.Singleton.StartHost();
 
         if (result)
@@ -94,6 +96,7 @@ public class Manager : MonoBehaviour
         SetUtpConnectionData();
 
         NetworkManager.Singleton.StartClient();
+
     }
 
     public void LoadGameScene(string name)
