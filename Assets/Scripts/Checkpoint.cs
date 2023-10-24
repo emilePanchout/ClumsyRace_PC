@@ -8,6 +8,8 @@ public class Checkpoint : MonoBehaviour
 
     public Transform SpawnPoint;
     public bool isPassed;
+    public AudioSource audio;
+    public ParticleSystem particle;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -15,6 +17,8 @@ public class Checkpoint : MonoBehaviour
         {
             other.gameObject.GetComponent<Player>().lastCheckpoint = SpawnPoint;
             isPassed = true;
+            audio.Play();
+            particle.Play();
 
         }
     }

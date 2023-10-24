@@ -16,7 +16,9 @@ public class RaceManager : NetworkBehaviour
     public GameObject finishCountdown;
     public TMP_Text finishCountdownText;
     public GameObject finishImage;
+    public int timeToStart = 11;
     public int timeTofFinish = 30;
+
 
     public List<GameObject> playerFinished;
 
@@ -120,7 +122,7 @@ public class RaceManager : NetworkBehaviour
     public void StartCountdownClientRpc()
     {
         countdown.SetActive(true);
-        StartCoroutine(Countdown(10));
+        StartCoroutine(Countdown(timeToStart));
     }
 
     public void EndCountdown()
