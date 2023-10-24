@@ -135,7 +135,7 @@ MonoBehaviour:
   RotationSpeed: 6
   Projectile: {fileID: 84985807984661339, guid: 2e662e0ca34f6aa4f9fee035d2750918,
     type: 3}
-  ProjectileSpeed: 100
+  ProjectileSpeed: 500
 --- !u!1 &5218270253415537588
 GameObject:
   m_ObjectHideFlags: 0

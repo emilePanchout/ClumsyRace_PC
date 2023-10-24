@@ -51,7 +51,7 @@ public class RaceManager : NetworkBehaviour
     [ClientRpc]
     public void StartCountdownClientRpc()
     {
-        StartCoroutine(Countdown(10));
+        StartCoroutine(Countdown(3));
         Debug.Log("clientRPC");
     }
 
