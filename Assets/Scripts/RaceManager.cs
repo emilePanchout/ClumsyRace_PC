@@ -7,7 +7,9 @@ using TMPro;
 public class RaceManager : NetworkBehaviour
 {
     private PlayerManager playerManager;
+    public MapLoader mapLoader;
 
+    public GameObject spectateCam;
     public RaceSpawn raceSpawner;
     public GameObject countdown;
     public TMP_Text countdownText;
@@ -28,6 +30,11 @@ public class RaceManager : NetworkBehaviour
         
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         LockCursor();
+        mapLoader.LoadMap();
+        raceSpawner = GameObject.Find("StartLine(Clone)").GetComponent<RaceSpawn>();
+        spectateCam.transform.position = raceSpawner.transform.position + Vector3.up * 3;
+        spectateCam.transform.rotation = raceSpawner.transform.rotation;
+
         PreparePlayer();
         StartCountdown();
     }
