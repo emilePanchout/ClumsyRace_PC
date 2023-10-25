@@ -7,7 +7,7 @@ public class ShooterTrapStateManager : MonoBehaviour
     public ShooterTrapState currentState;
     public ShooterTrapPatrolState ShooterTrapPatrolState;
 
-    private GameObject player = null;
+    public GameObject Player = null;
 
     // Update is called once per frame
     void Update()
@@ -24,7 +24,7 @@ public class ShooterTrapStateManager : MonoBehaviour
         }
         else
         {
-            nextState = currentState?.RunCurrentState(player);
+            nextState = currentState?.RunCurrentState(Player);
         }
 
         if (nextState != null )
@@ -40,27 +40,27 @@ public class ShooterTrapStateManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (player == null && other.name == "Player")
+        if (Player == null && other.CompareTag("Player"))
         {
-            player = other.gameObject;
+            Player = other.gameObject;
             ShooterTrapPatrolState.CanSeePlayer = true;
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (player == null && other.name == "Player")
+        if (Player == null && other.CompareTag("Player"))
         {
-            player = other.gameObject;
+            Player = other.gameObject;
             ShooterTrapPatrolState.CanSeePlayer = true;
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == player)
+        if (other.gameObject == Player)
         {
-            player = null;
+            Player = null;
             ShooterTrapPatrolState.CanSeePlayer = false;
         }
     }

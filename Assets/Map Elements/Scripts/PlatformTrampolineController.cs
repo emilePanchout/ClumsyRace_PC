@@ -20,9 +20,11 @@ public class PlatformTrampolineController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Player")
+        if (other.CompareTag("Player"))
         {
-            other.GetComponent<Rigidbody>().AddForce(other.transform.up * LaunchForce);
+            Debug.Log(other.name + " entered");
+            //other.GetComponent<Rigidbody>().AddForce(transform.up * LaunchForce, ForceMode.Impulse);
+            other.transform.parent.GetComponentInParent<Rigidbody>().AddForce(transform.up * LaunchForce, ForceMode.Impulse);
         }
     }
 }

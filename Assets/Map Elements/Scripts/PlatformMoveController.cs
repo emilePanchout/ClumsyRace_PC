@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class PlatformMoveController : MonoBehaviour
+public class PlatformMoveController : NetworkBehaviour
 {
-    public MovingAxis _MovingAxis = MovingAxis.Z;
+    public MovingAxis _MovingAxis;
 
-    public float MovingSpeed = 1;
-    public float MovingDistance = 4;
+    public float MovingSpeed;
+    public float MovingDistance;
 
     private Vector3 startPosition;
 
@@ -20,30 +21,42 @@ public class PlatformMoveController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (_MovingAxis == MovingAxis.Z)
+        if (IsServer)
         {
-            transform.position = new Vector3(transform.position.x, transform.position.y, startPosition.z + Mathf.PingPong(MovingSpeed * Time.time, MovingDistance));
-        }
-        else if (_MovingAxis == MovingAxis.X)
-        {
-            transform.position = new Vector3(startPosition.x + Mathf.PingPong(MovingSpeed * Time.time, MovingDistance), transform.position.y, transform.position.z);
+            if (_MovingAxis == MovingAxis.Z)
+            {
+                transform.position = new Vector3(transform.position.x, transform.position.y, startPosition.z + Mathf.PingPong(MovingSpeed * Time.time, MovingDistance));
+            }
+            else if (_MovingAxis == MovingAxis.X)
+            {
+                transform.position = new Vector3(startPosition.x + Mathf.PingPong(MovingSpeed * Time.time, MovingDistance), transform.position.y, transform.position.z);
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.name == "Player")
+        if (IsServer && other.CompareTag("Player"))
         {
-            other.transform.SetParent(transform);
+            Debug.Log(IsServer);
+            other.transform.parent.parent.SetParent(transform);
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
-        if (other.name == "Player")
+        if (IsServer && other.CompareTag("Player"))
         {
-            other.transform.SetParent(null);
+            Debug.Log(IsServer);
+            other.transform.parent.parent.SetParent(null);
         }
     }
+
+    //[ClientRpc]
+    //private void SetPlayerParentClientRpc(Transform playerTransform, Transform newParentTransform)
+    //{
+    //    playerTransform.SetParent(newParentTransform);
+    //}
 }
 
 public enum MovingAxis

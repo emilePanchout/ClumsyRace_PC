@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ShooterTrapController : MonoBehaviour
+public class ShooterTrapController : NetworkBehaviour
 {
     public float RotationSpeed;
     public GameObject Projectile;
@@ -40,11 +41,11 @@ public class ShooterTrapController : MonoBehaviour
     {
         transform.LookAt(target.transform.position);
 
-        if (Time.time >= ShootCooldown)
+        if (IsServer && Time.time >= ShootCooldown)
         {
             var newProjectile = Instantiate(Projectile, transform.Find("AXLE 40MM").position, transform.rotation);
-
             newProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * ProjectileSpeed);
+            newProjectile.GetComponent<NetworkObject>().Spawn();
 
             ShootCooldown = Time.time + 1;
         }
