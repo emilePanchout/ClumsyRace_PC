@@ -57,14 +57,10 @@ public class PlayerMovement : NetworkBehaviour
         {
             MovePlayer();
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
         grounded = Physics.Raycast(transform.position, Vector3.down, 0.2f);//, Ground);
 
-        if(Input.GetKey(KeyCode.Space) && grounded && CanJump)
+        if (Input.GetKey(KeyCode.Space) && grounded && CanJump)
         {
             Jump();
         }
@@ -73,13 +69,19 @@ public class PlayerMovement : NetworkBehaviour
 
         if (grounded)
         {
-            rb.drag = groundDrag;
+            rb.drag = groundDrag * Time.deltaTime;
         }
         else
         {
             rb.drag = 0;
         }
 
+
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
         RotationX += -_look.y * rotationSpeed * Time.deltaTime;
         RotationX = Mathf.Clamp(RotationX, xAngleLowerLimit, xAngleUpperLimit);
 

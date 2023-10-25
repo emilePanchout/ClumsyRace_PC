@@ -1092,11 +1092,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 4
   groundDrag: 5
-  jumpForce: 0.4
+  jumpForce: 0.8
   airMultiplier: 0.4
   orientation: {fileID: 3277525126346906573}
   playerCamera: {fileID: 507443427826515036}
-  rotationSpeed: 15
+  rotationSpeed: 80
   xAngleUpperLimit: 15
   xAngleLowerLimit: 15
 --- !u!114 &171967841484739524
