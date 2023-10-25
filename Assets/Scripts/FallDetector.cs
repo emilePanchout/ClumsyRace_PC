@@ -10,7 +10,8 @@ public class FallDetector : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            other.gameObject.GetComponent<Player>().TeleportToCheckpoint();
+            GameObject player = other.gameObject.transform.parent.transform.parent.gameObject;
+            player.GetComponent<Player>().TeleportToCheckpoint();
         }
     }
 

@@ -2531,6 +2531,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 148996174}
+  defaultMap: {fileID: 2083780370}
   correspondance:
   - type: 0
     prefab: {fileID: 393176109657658385, guid: 8059388590599fd4da63c5b8a043615b, type: 3}
@@ -3954,6 +3955,36 @@ PrefabInstance:
       propertyPath: spawnerList.Array.data[9]
       value: 
       objectReference: {fileID: 1794431723}
+    - target: {fileID: 4101206669609517515, guid: 8059388590599fd4da63c5b8a043615b,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101206669609517515, guid: 8059388590599fd4da63c5b8a043615b,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.999962
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101206669609517515, guid: 8059388590599fd4da63c5b8a043615b,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.008726558
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101206669609517515, guid: 8059388590599fd4da63c5b8a043615b,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101206669609517515, guid: 8059388590599fd4da63c5b8a043615b,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4101206669609517515, guid: 8059388590599fd4da63c5b8a043615b,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

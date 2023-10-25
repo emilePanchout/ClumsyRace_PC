@@ -8,6 +8,7 @@ public class MapLoader: MonoBehaviour
 {
     public Transform map;
     private GameObject prefab;
+    public GameObject defaultMap;
     public List<ObjectCorrespondance> correspondance;
 
 
@@ -21,7 +22,6 @@ public class MapLoader: MonoBehaviour
     {
         string filePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop) + "/map.json";
 
-        Debug.Log("test");
 
         if(File.Exists(filePath))
         {
@@ -42,6 +42,10 @@ public class MapLoader: MonoBehaviour
                 Instantiate(prefab, mapObject.position / 2, mapObject.rotation, map);
                 Debug.Log("Generating object");
             }
+        }
+        else
+        {
+            defaultMap.SetActive(true);
         }
     }
 }

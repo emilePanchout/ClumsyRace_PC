@@ -31,7 +31,16 @@ public class RaceManager : NetworkBehaviour
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         LockCursor();
         mapLoader.LoadMap();
-        raceSpawner = GameObject.Find("StartLine(Clone)").GetComponent<RaceSpawn>();
+
+        if(GameObject.Find("StartLine(Clone)") != null)
+        {
+            raceSpawner = GameObject.Find("StartLine(Clone)").GetComponent<RaceSpawn>();
+        }
+        else
+        {
+            raceSpawner = GameObject.Find("StartLine").GetComponent<RaceSpawn>();
+        }
+
         spectateCam.transform.position = raceSpawner.transform.position + Vector3.up * 3;
         spectateCam.transform.rotation = raceSpawner.transform.rotation;
 
