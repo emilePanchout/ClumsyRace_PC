@@ -21,7 +21,7 @@ public class FinishDetection : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GameObject player = other.gameObject;
+            GameObject player = other.gameObject.transform.parent.gameObject.transform.parent.gameObject;
 
             player.SetActive(false);
             raceManager.playerFinished.Add(player);

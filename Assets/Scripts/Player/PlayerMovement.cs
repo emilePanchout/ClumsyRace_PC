@@ -16,20 +16,25 @@ public class PlayerMovement : NetworkBehaviour
     public float airMultiplier;
 
     [Header("Ground Check")]
-    public float playerHeight;
-    public LayerMask Ground;
     bool grounded;
 
     public Transform orientation;
 
     Vector2 movement;
-
     Vector3 moveDirection;
 
     Rigidbody rb;
 
     bool CanMove = true;
     bool CanJump = true;
+
+    [Header("Camera")]
+    public Camera playerCamera;
+    private Vector2 _look; 
+    private float RotationX = 0;
+    public float rotationSpeed = 15;
+    public float xAngleUpperLimit = 15;
+    public float xAngleLowerLimit = 15;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +62,7 @@ public class PlayerMovement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f);//, Ground);
+        grounded = Physics.Raycast(transform.position, Vector3.down, 0.2f);//, Ground);
 
         if(Input.GetKey(KeyCode.Space) && grounded && CanJump)
         {
@@ -74,6 +79,17 @@ public class PlayerMovement : NetworkBehaviour
         {
             rb.drag = 0;
         }
+
+        RotationX += -_look.y * rotationSpeed * Time.deltaTime;
+        RotationX = Mathf.Clamp(RotationX, xAngleLowerLimit, xAngleUpperLimit);
+
+        playerCamera.transform.localRotation = Quaternion.Euler(RotationX, 0, 0);
+        transform.rotation *= Quaternion.Euler(0, _look.x * rotationSpeed * Time.deltaTime, 0);
+    }
+
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        _look = context.ReadValue<Vector2>();
     }
 
     public void OnMove(InputAction.CallbackContext context)

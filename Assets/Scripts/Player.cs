@@ -14,8 +14,6 @@ public class Player : NetworkBehaviour
     public TMP_Text playerName;
     public GameObject playerCamera;
     public PlayerInput playerInput;
-    public MeshRenderer modelMesh;
-    public CharacterController characterController;
 
     public Transform lastCheckpoint;
 
@@ -63,7 +61,7 @@ public class Player : NetworkBehaviour
     {
         if (IsOwner)
         {
-            characterController.enabled = charToggle;
+            //characterController.enabled = charToggle;
         }
 
     }
@@ -103,10 +101,11 @@ public class Player : NetworkBehaviour
     {
         if(IsOwner)
         {
-            characterController.enabled = false;
+            //characterController.enabled = false;
             transform.position = lastCheckpoint.transform.position;
             transform.rotation = lastCheckpoint.transform.rotation;
-            characterController.enabled = true; ;
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, lastCheckpoint.transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            //characterController.enabled = true; ;
         }
 
     }
