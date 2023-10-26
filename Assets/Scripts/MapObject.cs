@@ -40,7 +40,7 @@ public class MapObject : MonoBehaviour
         SmallHill,
         SmallLongHill,
         Void,
-
+        MovingPlatform,
 
     }
 
