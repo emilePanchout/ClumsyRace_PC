@@ -15,7 +15,11 @@ public class PlatformMoveController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.GetComponent<NetworkObject>().Spawn();
+        if(NetworkManager.Singleton.IsServer)
+        {
+            gameObject.GetComponent<NetworkObject>().Spawn();
+        }
+
         startPosition = transform.position;
     }
 

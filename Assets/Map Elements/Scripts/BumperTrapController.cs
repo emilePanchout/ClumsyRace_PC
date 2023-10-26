@@ -11,7 +11,10 @@ public class BumperController : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var direction = (other.transform.parent.parent.position - transform.position).normalized;
-            other.transform.parent.GetComponentInParent<Rigidbody>().AddForce(direction * BumpForce, ForceMode.Impulse);
+            //other.transform.parent.GetComponentInParent<Rigidbody>().AddForce(direction * BumpForce, ForceMode.Impulse);
+            other.transform.parent.GetComponentInParent<Rigidbody>().AddExplosionForce(BumpForce, transform.position + Vector3.up * 2,3);
+
+
         }
     }
 }

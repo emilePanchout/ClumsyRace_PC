@@ -15,7 +15,7 @@ public class PlayerMovement : NetworkBehaviour
     public float jumpForce;
     public float airMultiplier;
     public float jumpRaycast = 0.2f;
-    public Transform raycastSource;
+    public Transform spherecastSource;
 
     [Header("Ground Check")]
     bool grounded;
@@ -84,9 +84,12 @@ public class PlayerMovement : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        grounded = Physics.Raycast(raycastSource.position, Vector3.down, jumpRaycast);//, Ground);
+        //grounded = Physics.Raycast(raycastSource0.position, Vector3.down, jumpRaycast);
+        RaycastHit hit;
 
-        Debug.DrawRay(transform.position, Vector3.down * jumpRaycast, Color.green,10);
+        //Gizmos.DrawSphere(spherecastSource.position);
+        grounded = Physics.SphereCast(spherecastSource.position, jumpRaycast, Vector3.down, out hit,1);
+
         RotationX += -_look.y * rotationSpeed * Time.deltaTime;
         RotationX = Mathf.Clamp(RotationX, xAngleLowerLimit, xAngleUpperLimit);
 
