@@ -89,6 +89,7 @@ public class LobbyManager : NetworkBehaviour
             player.GetComponent<Player>().ToggleKinematic(true);
             player.GetComponent<Player>().ToggleCharacterController(false);
             player.GetComponent<Player>().lastCheckpoint = null;
+            player.GetComponent<PlayerMovement>().CanJump = false;
 
         }
     }

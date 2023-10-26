@@ -27,8 +27,8 @@ public class PlayerMovement : NetworkBehaviour
 
     Rigidbody rb;
 
-    bool CanMove = true;
-    bool CanJump = true;
+    public bool CanMove = true;
+    public bool CanJump = true;
 
     [Header("Camera")]
     public Camera playerCamera;

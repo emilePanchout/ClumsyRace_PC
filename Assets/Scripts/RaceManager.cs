@@ -156,6 +156,7 @@ public class RaceManager : NetworkBehaviour
         foreach (NetworkObject player in playerManager.playerList)
         {
             player.GetComponent<Player>().ToggleInputs(true);
+            player.GetComponent<PlayerMovement>().CanJump = true;
         }
 
     }
