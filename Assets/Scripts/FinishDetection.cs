@@ -13,7 +13,7 @@ public class FinishDetection : MonoBehaviour
     private void Start()
     {
         raceManager = GameObject.Find("RaceManager").GetComponent<RaceManager>();
-        ranking = GameObject.Find("Ranking").GetComponent<Ranking>();
+        //ranking = GameObject.Find("Ranking").GetComponent<Ranking>();
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
     }
 
@@ -26,7 +26,7 @@ public class FinishDetection : MonoBehaviour
             player.SetActive(false);
             raceManager.playerFinished.Add(player);
             int index = raceManager.playerFinished.IndexOf(player);
-            ranking.rankingText[index].text = (index + 1).ToString() + ". " + player.GetComponent<Player>().playerName.text;
+            //ranking.rankingText[index].text = (index + 1).ToString() + ". " + player.GetComponent<Player>().playerName.text;
 
          
 

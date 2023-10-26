@@ -8,6 +8,7 @@ public class RaceManager : NetworkBehaviour
 {
     private PlayerManager playerManager;
     public MapLoader mapLoader;
+    public Ranking ranking;
 
     public GameObject spectateCam;
     public RaceSpawn raceSpawner;
@@ -105,6 +106,12 @@ public class RaceManager : NetworkBehaviour
     public void FinishGame()
     {
         finishImage.SetActive(true);
+        int i = 0;
+        foreach(GameObject player in playerFinished)
+        {
+            ranking.rankingText[i].text = (i+1) + ". " + player.GetComponent<Player>().playerName.text;
+            i++;
+        }
         finishCountdown.SetActive(false);
         StartCoroutine(WaitEnd());
        

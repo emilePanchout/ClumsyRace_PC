@@ -974,6 +974,7 @@ GameObject:
   - component: {fileID: 171967841484739524}
   - component: {fileID: 1352079329502581697}
   - component: {fileID: 106261187246864513}
+  - component: {fileID: 6660406560604013601}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1068,6 +1069,8 @@ MonoBehaviour:
   jumpRaycast: 0.2
   spherecastSource: {fileID: 3936031269300160732}
   orientation: {fileID: 3277525126346906573}
+  CanMove: 1
+  CanJump: 1
   playerCamera: {fileID: 507443427826515036}
   rotationSpeed: 80
   xAngleUpperLimit: 15
@@ -1253,6 +1256,20 @@ MonoBehaviour:
   InLocalSpace: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &6660406560604013601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6326570961819719213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e283c6813dc63a445a530faea02068bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  models:
+  - {fileID: 8990615830939903102}
 --- !u!1 &6913931604830590920
 GameObject:
   m_ObjectHideFlags: 0
