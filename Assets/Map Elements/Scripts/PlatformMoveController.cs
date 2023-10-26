@@ -15,13 +15,14 @@ public class PlatformMoveController : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameObject.GetComponent<NetworkObject>().Spawn();
         startPosition = transform.position;
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (IsServer)
+        if (NetworkManager.Singleton.IsServer)
         {
             if (_MovingAxis == MovingAxis.Z)
             {
@@ -36,7 +37,7 @@ public class PlatformMoveController : NetworkBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (IsServer && other.CompareTag("Player"))
+        if (NetworkManager.Singleton.IsServer && other.CompareTag("Player"))
         {
             other.transform.parent.parent.SetParent(transform);
         }
@@ -44,7 +45,7 @@ public class PlatformMoveController : NetworkBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (IsServer && other.CompareTag("Player"))
+        if (NetworkManager.Singleton.IsServer && other.CompareTag("Player"))
         {
             other.transform.parent.parent.SetParent(null);
         }

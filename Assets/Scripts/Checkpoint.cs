@@ -13,9 +13,10 @@ public class Checkpoint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameObject player = other.gameObject.transform.parent.transform.parent.gameObject;
-        if (other.CompareTag("Player") && NetworkManager.Singleton.LocalClient.PlayerObject == player.GetComponent<NetworkObject>() && !isPassed)
+        
+        if (other.CompareTag("Player") && NetworkManager.Singleton.LocalClient.PlayerObject == other.gameObject.transform.parent.parent.gameObject.GetComponent<NetworkObject>() && !isPassed)
         {
+            GameObject player = other.gameObject.transform.parent.parent.gameObject;
             player.GetComponent<Player>().lastCheckpoint = SpawnPoint;
             isPassed = true;
             audio.Play();

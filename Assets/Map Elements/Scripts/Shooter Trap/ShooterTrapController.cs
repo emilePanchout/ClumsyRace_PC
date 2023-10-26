@@ -41,9 +41,12 @@ public class ShooterTrapController : NetworkBehaviour
     {
         transform.LookAt(target.transform.position);
 
-        if (IsServer && Time.time >= ShootCooldown)
+        if (NetworkManager.Singleton.IsServer && Time.time >= ShootCooldown)
         {
             var newProjectile = Instantiate(Projectile, transform.Find("AXLE 40MM").position, transform.rotation);
+            newProjectile.gameObject.GetComponent<ProjectileBehaviour>().shooterParent = gameObject.GetComponent<ShooterTrapStateManager>();
+            newProjectile.gameObject.GetComponent<ProjectileBehaviour>().patrolState = gameObject.GetComponentInChildren<ShooterTrapPatrolState>();
+
             newProjectile.GetComponent<Rigidbody>().AddForce(transform.forward * ProjectileSpeed);
             newProjectile.GetComponent<NetworkObject>().Spawn();
 
