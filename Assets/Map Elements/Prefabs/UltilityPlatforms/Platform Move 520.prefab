@@ -84,7 +84,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _MovingAxis: 0
   MovingSpeed: 2
-  MovingDistance: 8
+  MovingDistance: 18.5
 --- !u!65 &9039381801147765036
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -38,7 +38,6 @@ public class PlatformMoveController : NetworkBehaviour
     {
         if (IsServer && other.CompareTag("Player"))
         {
-            Debug.Log(IsServer);
             other.transform.parent.parent.SetParent(transform);
         }
     }
@@ -47,16 +46,9 @@ public class PlatformMoveController : NetworkBehaviour
     {
         if (IsServer && other.CompareTag("Player"))
         {
-            Debug.Log(IsServer);
             other.transform.parent.parent.SetParent(null);
         }
     }
-
-    //[ClientRpc]
-    //private void SetPlayerParentClientRpc(Transform playerTransform, Transform newParentTransform)
-    //{
-    //    playerTransform.SetParent(newParentTransform);
-    //}
 }
 
 public enum MovingAxis

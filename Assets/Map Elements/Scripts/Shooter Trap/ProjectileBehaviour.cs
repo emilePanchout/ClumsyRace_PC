@@ -8,10 +8,8 @@ public class ProjectileBehaviour : NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
-        {
-            Debug.Log(other.tag + " entered condition");
-            
-            other.gameObject.GetComponent<Player>().TeleportToCheckpoint();
+        {            
+            other.transform.parent.GetComponentInParent<Player>().TeleportToCheckpoint();
             
             GameObject.Find("Trap shooter").gameObject.GetComponent<ShooterTrapStateManager>().Player = null;
             GameObject.Find("Patrol State").gameObject.GetComponent<ShooterTrapPatrolState>().CanSeePlayer = false;
