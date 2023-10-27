@@ -99,8 +99,10 @@ public class Player : NetworkBehaviour
 
     public void TeleportToCheckpoint()
     {
+        Debug.Log("trying to tp");
         if(IsOwner)
         {
+            Debug.Log("tp");
             //characterController.enabled = false;
             transform.position = lastCheckpoint.transform.position;
             transform.rotation = lastCheckpoint.transform.rotation;

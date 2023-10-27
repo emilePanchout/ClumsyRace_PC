@@ -12,11 +12,19 @@ public class ProjectileBehaviour : NetworkBehaviour
         if (other.CompareTag("Player"))
         {            
             other.transform.parent.GetComponentInParent<Player>().TeleportToCheckpoint();
+
             
-            shooterParent.Player = null;
-            patrolState.CanSeePlayer = false;
-            
-            gameObject.GetComponent<NetworkObject>().Despawn();
+            if(other.transform.parent.GetComponentInParent<NetworkObject>().IsLocalPlayer)
+            {
+                DespawnProjectileServerRpc();
+            }
+
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void DespawnProjectileServerRpc()
+    {
+        gameObject.GetComponent<NetworkObject>().Despawn();
     }
 }
