@@ -18,16 +18,15 @@ public class MapLoader: MonoBehaviour
     }
 
 
-    public void LoadMap()
+    public void LoadMap(string mapName)
     {
-        string filePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop) + "/map.json";
+        string filePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop) + "/" + mapName + ".json";
 
 
         if(File.Exists(filePath))
         {
             string json = File.ReadAllText(filePath);
             Objectwrapper wrapper = JsonUtility.FromJson<Objectwrapper>(json);
-            Debug.Log(JsonUtility.FromJson<Objectwrapper>(json));
 
             foreach(MapObject.MapObjects mapObject in wrapper.data)
             {

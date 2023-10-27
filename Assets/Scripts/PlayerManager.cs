@@ -12,6 +12,8 @@ public class PlayerManager : NetworkBehaviour
 
     public List<NetworkObject> playerList;
 
+    public string mapName;
+
     private void Start()
     {
         DontDestroyOnLoad(gameObject);

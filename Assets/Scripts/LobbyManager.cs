@@ -7,7 +7,7 @@ using TMPro;
 
 public class LobbyManager : NetworkBehaviour
 {
-    private PlayerManager playerManager;
+    public PlayerManager playerManager;
 
     public TMP_Text playerCountText;
     public List<PlayerSpawner> spawnPoints;

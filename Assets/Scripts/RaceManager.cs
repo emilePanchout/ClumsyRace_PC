@@ -10,6 +10,7 @@ public class RaceManager : NetworkBehaviour
     public MapLoader mapLoader;
     public Ranking ranking;
 
+
     public GameObject spectateCam;
     public RaceSpawn raceSpawner;
     public GameObject countdown;
@@ -31,7 +32,7 @@ public class RaceManager : NetworkBehaviour
         
         playerManager = GameObject.Find("PlayerManager").GetComponent<PlayerManager>();
         LockCursor();
-        mapLoader.LoadMap();
+        mapLoader.LoadMap(playerManager.mapName);
 
         if(GameObject.Find("StartLine(Clone)") != null)
         {
