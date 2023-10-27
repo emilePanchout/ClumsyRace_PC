@@ -20,7 +20,7 @@ public class MapLoader: MonoBehaviour
 
     public void LoadMap(string mapName)
     {
-        string filePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop) + "/" + mapName + ".json";
+        string filePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop) + "/map.json";
 
 
         if(File.Exists(filePath))
